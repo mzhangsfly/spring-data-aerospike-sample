@@ -1,0 +1,80 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>DashBoard</title>
+	<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="webjars/font-awesome/css/font-awesome.css"/>
+	
+	<script src="webjars/jquery/jquery.min.js"></script>
+	<script src="webjars/bootstrap/js/bootstrap.min.js"></script>
+	<script src="webjars/angularjs/angular.min.js"></script>
+	<script src="webjars/angularjs/angular-route.js"></script>
+	<script src="js/rssController.js"></script>
+
+</head>
+<body ng-app="myapp">
+	<div class="container" ng-show="!home.authenticated">
+		Login with: <a href="/login">Facebook</a>
+	</div>
+	<div class="container" ng-show="home.authenticated">
+		Logged in as: <span ng-bind="home.user"></span>
+		<div>
+			<button ng-click="home.logout()" class="btn btn-primary">Logout</button>
+		</div>
+	</div>
+	
+	 <div class="container" ng-controller="ListController">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form ng-submit="addNew()">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" /></th>
+                                        <th>RSS feed URL</th>
+                                        <th>Fetch Interval(mins)</th>
+                                        <th>Expire Date</th>
+                                        <th>Enabled</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="personalDetail in greeting">
+                                        <td>
+                                            <input type="checkbox" ng-model="personalDetail.selected"/></td>
+                                        <td>{{personalDetail.url}}</td>
+                                        <td>{{personalDetail.loadIntervalMins}}</td>
+                                        <td>{{personalDetail.expireDate | date:'medium'}}</td>
+                                       <td><input type="checkbox" class="form-control" ng-model="personalDetail.enabled" /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="form-group">
+                            <table class="table table-striped table-bordered">                                
+                            	<tbody>
+                            		<tr>
+                                        <td>
+                                            <input type="text" class="form-control" ng-model="url" required/></td>
+                                        <td>
+                                            <input type="number" class="form-control" ng-model="loadIntervalMins" required/></td>
+                                        <td>
+                                            <input type="date" class="form-control" ng-model="expireDate" required/></td>
+                                        
+                                <input ng-hide="!personalDetails.length" type="button" class="btn btn-danger pull-right" ng-click="remove()" value="Remove">
+                                <input type="submit" class="btn btn-primary addnew pull-right" value="Add New">
+                                
+                                </tr>
+                                </tbody></table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</body>
+</html>

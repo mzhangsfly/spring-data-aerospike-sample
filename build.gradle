@@ -1,0 +1,52 @@
+buildscript {
+	ext {
+		springBootVersion = '1.4.3.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+		maven { url "https://repo.spring.io/snapshot" }
+        maven { url "https://repo.spring.io/milestone" }
+		
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'org.springframework.boot'
+
+group = 'com.aerospike.spring'
+version = '1.0.0 SNAPSHOT'
+
+description = """sample for spring data aerospike"""
+
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+	mavenLocal()
+}
+
+
+dependencies {
+	compile 'org.webjars:jquery:1.11.1'
+	compile 'org.webjars:bootstrap:3.2.0'
+	compile 'org.webjars:angularjs:1.4.3'
+	compile 'org.webjars:angular-router:0.5.3'
+	compile 'org.webjars:angular-facebook:0.2.3'
+	compile 'org.webjars:font-awesome:4.7.0'
+	compile 'org.webjars:webjars-locator'
+
+	compile('org.springframework.data:spring-data-aerospike:1.0.1-SNAPSHOT')
+	compile('org.springframework.data:spring-data-commons:1.13.0.RC1')
+	compile('org.springframework.data:spring-data-keyvalue:1.2.0.M1')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.springframework.boot:spring-boot-starter-web-services')
+	compile('org.jsoup:jsoup:1.10.2')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+	
+	compile group: 'com.joestelmach', name: 'natty', version: '0.12'
+
+}

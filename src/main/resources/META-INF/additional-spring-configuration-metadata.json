@@ -1,0 +1,17 @@
+{"properties": [
+  {
+    "name": "spring.aerospike.hostname",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.aerospike.hostname'"
+  },
+  {
+    "name": "spring.aerospike.port",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.aerospike.port'"
+  },
+  {
+    "name": "spring.aerospike.namespace",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.aerospike.namespace'"
+  }
+]}
