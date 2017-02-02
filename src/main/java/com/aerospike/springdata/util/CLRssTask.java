@@ -50,7 +50,7 @@ public class CLRssTask implements Runnable {
 			try {
 				executor.scheduleAtFixedRate(new CLRssData(src.getUrl(), aerospikeDataService), 1, src.getLoadInterval(), TimeUnit.MINUTES);
 			} catch (MalformedURLException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}

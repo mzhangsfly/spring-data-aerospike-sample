@@ -51,7 +51,6 @@ public class CLRssController {
 	public Collection<CLRssSource> listRssSource() {
 		return aerospikeDataService.getRssSourceMap().values();
 	}
-
 	
 	@RequestMapping(path = "/people", method = RequestMethod.GET)
 	public String getPeople() {

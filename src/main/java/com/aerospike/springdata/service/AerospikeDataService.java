@@ -74,7 +74,6 @@ public class AerospikeDataService {
 		syncRssSource();
 		rssSourceMap.put(CLRssData.CLSF_RENT_RSS_URL, new CLRssSource(CLRssData.CLSF_RENT_RSS_URL));
 		new Thread(clRssTask).start();
-
 	}
 
 	/**
@@ -97,12 +96,11 @@ public class AerospikeDataService {
 	public List<CLRentPage> fetchPage(double longitude, double latitude, double radius, long since){
 		return pageRepository.findByGeoLocationWithinAndPostDateAfter(longitude, latitude, radius, since);
 	}
-	
-	
+
+
 	public void syncRssSource(){
 		for(CLRssSource rr : rssRepository.findAll()){
 			log.info("Adding RSS resouce: " + rr.getUrl());
-			System.out.println(rr.getExpireDate());
 			rssSourceMap.put(rr.getUrl(), rr);
 		}
 	}
@@ -112,13 +110,7 @@ public class AerospikeDataService {
 	}
 	
 	public void save(List<CLRentPage> pages){
-		for(CLRentPage page : pages){
-			System.out.println("saving: " + page.getId() + ", price = "+ page.getPrice());
-			try{
-				aerospikeTemplate.save(page.getId(), page);
-			}catch(Exception e){e.printStackTrace();}
-		}
-//			pageRepository.save(pages);
+		pageRepository.save(pages);
 	}
 	
 	public CLRssSource saveRssConfig(CLRssSource rss){

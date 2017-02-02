@@ -4,14 +4,13 @@ angular.module("mapApp", ['ngMap']).controller('mapController', function($scope,
 	    "center": {
 	        "lat": 37.4212221,
 	        "lng": -122.0983744
-	    },
-	    "zoom": 15
+	    }
 	};
 	
 	$scope.searchParam = {
 		address : "2525 E Charleston Road, Mountain View, CA 94043",
-		distance : 3.50,
-		hours : 4
+		distance : 5,
+		hours : 12
 	};
 	
 	$http.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + encodeURI($scope.searchParam.address))
@@ -59,6 +58,7 @@ angular.module("mapApp", ['ngMap']).controller('mapController', function($scope,
         $scope.map = map;
         $scope.mCluster = initMarkerClusterer();
         map.fitBounds($scope.bounds);
+    	$scope.submit();
     });
 
     $scope.cities = [
@@ -87,4 +87,7 @@ angular.module("mapApp", ['ngMap']).controller('mapController', function($scope,
             $scope.map.showInfoWindow('myInfoWindow', this);
         });
         return marker;
-    }});
+    }
+    
+
+});

@@ -30,11 +30,5 @@ public class RentalDataController {
 	public String rssConfig() {
 		return "configuration";
 	}
-	
-	@RequestMapping("/test")
-	public String testMap() {
-		return "test1";
-	}
-	
 
 }

@@ -12,30 +12,52 @@
 <script src="https://rawgit.com/allenhwkim/angularjs-google-maps/master/testapp/scripts/markerclusterer.js"></script>
 <script src="js/mapController.js"></script>
 <link rel="stylesheet" type="text/css" href="css/map.css">
+<link rel="stylesheet" type="text/css" href="webjars/bootstrap/css/bootstrap.css">
 </head>
 
 <body ng-controller="mapController">
+<div class="container">
 	<h1>For Rent Property Search </h1>
 		<div>
-			<form ng-submit="submit()">
-				Enter Center Address: <input type="text" ng-model="searchParam.address" size="96"/><br/>
-				Distance from Center<input type="number" step="0.01" ng-model="searchParam.distance" /> Miles<br/>
-				Recent Post Within <input type="number" ng-model="searchParam.hours"/> Hrs<br/>
-				<input type="submit" id="submit" value="Submit" />
+			<form class="form-inline" ng-submit="submit()">
+				<div class="container">
+					<div class="row">
+						 <div class="form-group">
+						    <label for="address">Enter Center Address: </label>
+							<input class="form-control" type="text" id="address" ng-model="searchParam.address" size="64"/><br/>
+						</div>
+					</div>
+					<div class="row">
+						 <div class="form-group">
+						    <label for="number">Distance from Center: </label>
+							<input class="form-control" type="number" id="number" ng-model="searchParam.distance"  /><br/>
+						</div>
+						<div class="form-group">
+						    <label for="hours">Recent Post Within:</label>
+							<input class="form-control" type="number" id="hours" ng-model="searchParam.hours" /><br/>
+						</div>
+					</div>
+					<div class="row">
+						<input class="btn btn-default" type="submit" id="submit" value="Submit" />
+					</div>
+				</div>
 			</form>
 		</div>
   	<hr />
   
-	<ng-map default-style="false" zoom="3" center="{{map.ucenter.lat}}, {{map.ucenter.lng}}">
-		<info-window id="myInfoWindow">
-		    <div ng-non-bindable> 
-			    <div id="siteNotice"></div>
-    			<h1 id="firstHeading" class="firstHeading">{{selectedProperty.name}}</h1>
-          		<div id="bodyContent">
-           		    <br/>
-					<a target="_blank" href="{{selectedProperty.url}}"><img src="{{selectedProperty.image}}"/></a>		    
-			    </div>
-		</info-window>
-	</ng-map>
+   <div class="container">
+		<ng-map default-style="false" zoom="3" center="{{map.ucenter.lat}}, {{map.ucenter.lng}}">
+			<info-window id="myInfoWindow">
+			    <div ng-non-bindable> 
+				    <div id="siteNotice"></div>
+	    			<h1 id="firstHeading" class="firstHeading">{{selectedProperty.name}}</h1>
+	          		<div id="bodyContent">
+	           		    <br/>
+						<a target="_blank" href="{{selectedProperty.url}}"><img src="{{selectedProperty.image}}"/></a>		    
+				    </div>
+			</info-window>
+		</ng-map>
+	</div>
+</div>
 </body>
 </html>

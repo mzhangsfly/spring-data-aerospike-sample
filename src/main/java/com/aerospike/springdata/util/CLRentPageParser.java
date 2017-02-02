@@ -21,8 +21,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.NumberFormat;
 import java.text.ParseException;
-import java.util.Date;
-import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -31,9 +29,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
-import org.springframework.data.aerospike.core.AerospikeTemplate;
 
-import com.aerospike.client.AerospikeClient;
 import com.aerospike.client.Value;
 import com.aerospike.client.Value.GeoJSONValue;
 import com.aerospike.springdata.model.CLRentPage;
@@ -72,6 +68,7 @@ public class CLRentPageParser implements Callable<CLRentPage>{
             Matcher m = p.matcher(script.html()); // you have to use html here and NOT text! Text will drop the 'key' part
             while( m.find()){
             	rentPage = new CLRentPage(m.group(1)); // value only
+            	rentPage.setUrl(this.url.toString());
             }
 		}
 		
@@ -138,47 +135,4 @@ public class CLRentPageParser implements Callable<CLRentPage>{
 		return e.attr("data-location");
 	}
 	
-//	public static void main(String[] args){
-//		URL url;
-//		try {
-////			url = new URL("http://sfbay.craigslist.org/eby/apa/5973300472.html");
-////			CLRentPageParser page = new CLRentPageParser(url);
-//			String localhost = "192.168.105.145"; // make sure you change this to the correct address
-//			AerospikeClient client = new AerospikeClient(null, localhost, 3000);
-////			CLRentPage p = page.call();
-////			Key key = new Key("test", "CLRentPage", p.getId());
-////			Bin b = new Bin("postingBody",p.getPostingBody());
-////			WritePolicy wp = new WritePolicy();
-////			wp.timeout = 1000000;
-////			client.put(wp, key, b);
-//			AerospikeTemplate aerospikeTemplate = new AerospikeTemplate(client,
-//					"test");
-////			CLRentPage p2 = aerospikeTemplate.findById(p.getId(), CLRentPage.class);
-////			page.parsePosting(p2.getPostingBody(), p2);
-//			List<CLRentPage> ap = aerospikeTemplate.findAll(CLRentPage.class);
-//			int count =0, index = 0;
-//			String es = "";
-//			for(CLRentPage p : ap){
-//					count ++;
-//					try{
-//					p.setUrl(parseURLFromPosting(p.getPostingBody()));
-//					aerospikeTemplate.update(p);
-//					}catch(Exception e){
-//						es += p.getId();
-//					}
-//			}
-//			
-//			 System.out.println("page to upate: " + count);
-//			 System.out.println("error page indexs: " + es);
-////			aerospikeTemplate.createIndex(CLRentPage.class,
-////					"RentPage_area_index", "area", IndexType.NUMERIC);
-////
-////			aerospikeTemplate.update(page.call());
-////			System.out.println(p2.getPostingBody());
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//
-//	}
 }
