@@ -73,7 +73,7 @@ public class AerospikeDataService {
 		
 		syncRssSource();
 		rssSourceMap.put(CLRssData.CLSF_RENT_RSS_URL, new CLRssSource(CLRssData.CLSF_RENT_RSS_URL));
-//		new Thread(clRssTask).start();
+		new Thread(clRssTask).start();
 
 	}
 

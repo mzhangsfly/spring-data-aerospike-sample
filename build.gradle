@@ -4,6 +4,7 @@ buildscript {
 	}
 	repositories {
 		mavenCentral()
+		mavenLocal()
 		maven { url "https://repo.spring.io/snapshot" }
         maven { url "https://repo.spring.io/milestone" }
 		
@@ -16,6 +17,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'maven'
 apply plugin: 'org.springframework.boot'
+//apply plugin: 'war'
 
 group = 'com.aerospike.spring'
 version = '1.0.0 SNAPSHOT'
@@ -29,24 +31,43 @@ repositories {
 	mavenLocal()
 }
 
+//war{
+//	baseName="rentPage"
+//	version="0.0.1"
+//}
 
 dependencies {
+    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'com.squareup.okhttp:okhttp:2.7.5'
+    compile 'joda-time:joda-time:2.4'
+    compileOnly 'com.google.appengine:appengine-api-1.0-sdk:1.9.36'
+
 	compile 'org.webjars:jquery:1.11.1'
 	compile 'org.webjars:bootstrap:3.2.0'
 	compile 'org.webjars:angularjs:1.4.3'
+	compile 'org.webjars:angularjs-google-maps:1.17.6'
+	compile 'org.webjars:js-marker-clusterer:601215f'	
+	compile 'org.webjars:markerclustererplus:2.1.2'
+	compile 'org.webjars.bower:angular-material:1.1.1'
+	compile 'org.webjars:angular-ui-bootstrap:2.2.0'
 	compile 'org.webjars:angular-router:0.5.3'
 	compile 'org.webjars:angular-facebook:0.2.3'
 	compile 'org.webjars:font-awesome:4.7.0'
 	compile 'org.webjars:webjars-locator'
-
-	compile('org.springframework.data:spring-data-aerospike:1.0.1-SNAPSHOT')
+	compile('org.jsoup:jsoup:1.10.2')
+	
+	compile('org.springframework.boot:spring-boot-devtools')
+	compile('org.springframework.data:spring-data-aerospike:1.0.1.BUILD-SNAPSHOT')
 	compile('org.springframework.data:spring-data-commons:1.13.0.RC1')
 	compile('org.springframework.data:spring-data-keyvalue:1.2.0.M1')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-web-services')
-	compile('org.jsoup:jsoup:1.10.2')
+    compile("org.springframework.boot:spring-boot-starter-thymeleaf")
+
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 	
 	compile group: 'com.joestelmach', name: 'natty', version: '0.12'
+	
+//	providedRuntime('org.springframework.boot:spring-boot-starter-tomcat')
 
 }
