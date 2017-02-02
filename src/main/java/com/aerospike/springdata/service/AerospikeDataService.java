@@ -17,7 +17,6 @@
 
 package com.aerospike.springdata.service;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -71,20 +70,10 @@ public class AerospikeDataService {
 		aerospikeTemplate.createIndex(CLRentPage.class, "Rent_price_index", "price", IndexType.NUMERIC);
 		aerospikeTemplate.createIndex(CLRentPage.class, "Rent_post_date_index", "postDate", IndexType.NUMERIC);
 		aerospikeTemplate.createIndex(CLRssSource.class, "Rss_expiration_date_index", "expireDate", IndexType.NUMERIC);
-
-		log.info("Querying Page...");
-		System.out.println("Querying by Location.....");
-		long t = new Date().getTime() - 10*3600*1000;//1484690036000L;
-		List<CLRentPage> pages = pageRepository.findByGeoLocationWithinAndPostDateAfter(-122.429245, 37.705574 ,10000, t);
-		System.out.println("result count: " + pages.size());
-		for(CLRentPage p : pages){
-			System.out.println("......id=" + p.getId() + ", postTime=" + p.getPostDate());
-		}
 		
-		
-		rssSourceMap.put(CLRssData.CLSF_RENT_RSS_URL, new CLRssSource(CLRssData.CLSF_RENT_RSS_URL));
 		syncRssSource();
-		new Thread(clRssTask).start();
+		rssSourceMap.put(CLRssData.CLSF_RENT_RSS_URL, new CLRssSource(CLRssData.CLSF_RENT_RSS_URL));
+//		new Thread(clRssTask).start();
 
 	}
 
@@ -113,13 +102,26 @@ public class AerospikeDataService {
 	public void syncRssSource(){
 		for(CLRssSource rr : rssRepository.findAll()){
 			log.info("Adding RSS resouce: " + rr.getUrl());
+			System.out.println(rr.getExpireDate());
 			rssSourceMap.put(rr.getUrl(), rr);
 		}
 	}
 	
+	public void remove(String rssUrl){
+		rssRepository.delete(rssUrl);
+	}
+	
 	public void save(List<CLRentPage> pages){
-		try{
-			pageRepository.save(pages);
-		}catch(Exception e){e.printStackTrace();}
+		for(CLRentPage page : pages){
+			System.out.println("saving: " + page.getId() + ", price = "+ page.getPrice());
+			try{
+				aerospikeTemplate.save(page.getId(), page);
+			}catch(Exception e){e.printStackTrace();}
+		}
+//			pageRepository.save(pages);
+	}
+	
+	public CLRssSource saveRssConfig(CLRssSource rss){
+		return rssRepository.save(rss);
 	}
 }

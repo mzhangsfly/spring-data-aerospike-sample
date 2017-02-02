@@ -1,0 +1,87 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<title>DashBoard</title>
+	<link rel="stylesheet" type="text/css" href="/webjars/bootstrap/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="webjars/font-awesome/css/font-awesome.css"/>
+	<link rel="stylesheet" href="webjars/angular-material/angular-material.min.css"/>
+	
+	<script src="webjars/jquery/jquery.min.js"></script>
+	<script src="webjars/bootstrap/js/bootstrap.min.js"></script>
+	<script src="webjars/angularjs/angular.min.js"></script>
+	<script src="webjars/angularjs/angular-aria.min.js"></script>
+	<script src="webjars/angularjs/angular-animate.min.js"></script>
+	<script src="webjars/angularjs/angular-messages.min.js"></script>
+	<script src="webjars/angularjs/angular-route.min.js"></script>
+	<script src="webjars/angular-material/angular-material.js"></script>
+	<script src="js/rssApp.js"></script>
+	<script src="js/rssService.js"></script>
+
+</head>
+<body ng-app="myapp">
+	<div class="container" ng-show="!home.authenticated">
+		Login with: <a href="/login">Facebook</a>
+	</div>
+	<div class="container" ng-show="home.authenticated">
+		Logged in as: <span ng-bind="home.user"></span>
+		<div>
+			<button ng-click="home.logout()" class="btn btn-primary">Logout</button>
+		</div>
+	</div>
+	
+	 <div class="container" ng-controller="RssController">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form ng-submit="addNew()">
+                            <table class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th><input type="checkbox" ng-model="selectedAll" ng-click="checkAll()" /></th>
+                                        <th>RSS feed URL</th>
+                                        <th>Fetch Interval(mins)</th>
+                                        <th>Expire Date</th>
+                                        <th>Enabled</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="rssConfig in rssConfigs">
+                                        <td>
+                                            <input type="checkbox" ng-model="rssConfig.selected"/></td>
+                                        <td>{{rssConfig.url}}</td>
+                                        <td>{{rssConfig.loadInterval}}</td>
+                                        <td ><input type="date" ng-model="rssConfig.expireDate" ng-change="dateChange(rssConfig)" /></td>
+                                       <td><input type="checkbox" class="form-control" ng-model="rssConfig.enabled" ng-change="enableChange(rssConfig)"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="form-group">
+                            <table class="table table-striped table-bordered">                                
+                            	<tbody>
+                            		<tr>
+                                        <td>
+                                            <input type="text" class="form-control" ng-model="rssConfig.url" required="required"/></td>
+                                        <td>
+                                            <input type="number" class="form-control" ng-model="rssConfig.loadInterval" required="required"/></td>
+                                        <td>
+                                            <input type="date" class="form-control" ng-model="rssConfig.expireDate" /></td>
+                                        <td>
+                                        	<input type="checkbox" class="form-control" ng-model="rssConfig.enabled" required="required"/></td>
+                                        
+                                <input ng-hide="!rssConfigs.length" type="button" class="btn btn-danger pull-right" ng-click="remove()" value="Remove"/>
+                                <input type="submit" class="btn btn-primary addnew pull-right" value="Add New"/>
+                                
+                                </tr>
+                                </tbody></table>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

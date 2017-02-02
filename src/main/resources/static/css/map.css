@@ -1,0 +1,7 @@
+ng-map {
+	display: block;
+	margin: auto;
+	position:absolute;
+	width: 90%;
+	height: 90%;
+}

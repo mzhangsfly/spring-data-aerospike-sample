@@ -56,6 +56,8 @@ public class CLRentPage implements Serializable{
 	private String email;
 	
 	private String postingBody;
+	
+	private String url;
 
 	/**
 	 * @param id
@@ -218,6 +220,20 @@ public class CLRentPage implements Serializable{
 	 */
 	public void setPostingBody(String postingBody) {
 		this.postingBody = postingBody;
+	}
+
+	/**
+	 * @return the url
+	 */
+	public String getUrl() {
+		return url;
+	}
+
+	/**
+	 * @param url the url to set
+	 */
+	public void setUrl(String url) {
+		this.url = url;
 	}
 
 	@Override

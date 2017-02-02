@@ -48,7 +48,7 @@ public class CLRssTask implements Runnable {
 		for(CLRssSource src : aerospikeDataService.getRssSourceMap().values()){
 			
 			try {
-				executor.scheduleAtFixedRate(new CLRssData(src.getUrl(), aerospikeDataService), 1, src.getLoadIntervalMins(), TimeUnit.MINUTES);
+				executor.scheduleAtFixedRate(new CLRssData(src.getUrl(), aerospikeDataService), 1, src.getLoadInterval(), TimeUnit.MINUTES);
 			} catch (MalformedURLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

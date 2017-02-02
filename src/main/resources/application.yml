@@ -4,6 +4,10 @@ spring:
     hostname: 192.168.105.145
     port: 3000
     namespace: test
+  application:
+    name: rentalInfo
+  template:
+    cache: false
     
 logging:
   level:
@@ -12,3 +16,5 @@ logging:
     org.springframework: ERROR
     org.hibernate: ERROR
     com.aerospike: DEBUG
+    
+

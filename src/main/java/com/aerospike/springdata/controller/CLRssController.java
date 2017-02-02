@@ -2,12 +2,13 @@
 package com.aerospike.springdata.controller;
 
 import java.security.Principal;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,15 +30,21 @@ public class CLRssController {
 		return principal;
 	}
 
-	@RequestMapping("/hello")
-	public List<CLRssSource> index() {
-		CLRssSource dave = new CLRssSource("Iiny-url/Dave-01", 15, new Date(), "Matthews@gmail.com");
-		CLRssSource donny = new CLRssSource("Iiny-url/Dave-02", 12, new Date(), "Macintire@gmail.com");
-		CLRssSource oliver = new CLRssSource("Iiny-url/Oliver-01",15, new Date(),  "Matthews@gmail.com");
-		CLRssSource carter = new CLRssSource("Iiny-url/Carter-01", 15, new Date(), "Beauford@gmail.com");
-		CLRssSource boyd = new CLRssSource("Iiny-url/Boyd-01",15, new Date(),  "Tinsley@gmail.com");
-
-		return Arrays.asList(oliver, dave, donny, carter, boyd);
+	@RequestMapping(value="/rss", method={RequestMethod.GET})
+	public Collection<CLRssSource> index() {
+		return aerospikeDataService.getRssSourceMap().values();
+	}
+	
+	@RequestMapping(value="/rss", method={RequestMethod.POST,RequestMethod.PUT})
+	public CLRssSource updateSaveRssConfig(@RequestBody  CLRssSource rss) {
+		aerospikeDataService.getRssSourceMap().put(rss.getUrl(), rss);
+		return aerospikeDataService.saveRssConfig(rss);
+	}
+	
+	@RequestMapping(value="/rss/{url}", method={RequestMethod.DELETE})
+	public void removeRssConfig(@PathVariable (value="url") String rssUrl) {
+		System.out.println("removed rss: " + aerospikeDataService.getRssSourceMap().remove(rssUrl).getUrl());
+		aerospikeDataService.remove(rssUrl);
 	}
 	
 	@RequestMapping("/rssList")
@@ -52,9 +59,9 @@ public class CLRssController {
 	}
 	
 	@RequestMapping("/rental")
-	public List<CLRentPage> rentSearch(@RequestParam double lon, @RequestParam double lat, @RequestParam double radius, @RequestParam int hoursAgo){
+	public List<CLRentPage> rentSearch(@RequestParam double lng, @RequestParam double lat, @RequestParam double radius, @RequestParam int hoursAgo){
 		hoursAgo = hoursAgo > MAX_HOUR ? MAX_HOUR : hoursAgo;
 		
-		return aerospikeDataService.fetchPage(lon, lat, radius, new Date().getTime() - hoursAgo * 3600 * 1000);
+		return aerospikeDataService.fetchPage(lng, lat, radius, new Date().getTime() - hoursAgo * 3600 * 1000);
 	}
 }

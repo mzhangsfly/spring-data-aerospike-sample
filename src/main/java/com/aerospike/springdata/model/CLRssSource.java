@@ -28,13 +28,15 @@ public class CLRssSource {
 	
 	private @Id String url;
 	
-	private Integer loadIntervalMins;
+	private Integer loadInterval;
 	
 	private Date expireDate;
 	
 	private Boolean enabled;
 	
 	private String email;
+	
+	public CLRssSource(){}
 	
 	/**
 	 * @param url
@@ -65,7 +67,7 @@ public class CLRssSource {
 	public CLRssSource(String url, Integer loadIntervalMins, Date expireDate, Boolean enabled, String email) {
 		super();
 		this.url = url;
-		this.loadIntervalMins = loadIntervalMins;
+		this.loadInterval = loadIntervalMins;
 		this.expireDate = expireDate;
 		this.enabled = enabled;
 		this.email = email;
@@ -91,16 +93,16 @@ public class CLRssSource {
 	/**
 	 * @return the loadIntervalMins
 	 */
-	public Integer getLoadIntervalMins() {
-		return loadIntervalMins;
+	public Integer getLoadInterval() {
+		return loadInterval;
 	}
 
 
 	/**
 	 * @param loadIntervalMins the loadIntervalMins to set
 	 */
-	public void setLoadIntervalMins(Integer loadIntervalMins) {
-		this.loadIntervalMins = loadIntervalMins;
+	public void setLoadInterval(Integer loadIntervalMins) {
+		this.loadInterval = loadIntervalMins;
 	}
 
 
