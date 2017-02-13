@@ -1,6 +1,7 @@
 
 package com.aerospike.springdata.controller;
 
+import java.net.MalformedURLException;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.Date;
@@ -35,16 +36,19 @@ public class CLRssController {
 		return aerospikeDataService.getRssSourceMap().values();
 	}
 	
-	@RequestMapping(value="/rss", method={RequestMethod.POST,RequestMethod.PUT})
-	public CLRssSource updateSaveRssConfig(@RequestBody  CLRssSource rss) {
-		aerospikeDataService.getRssSourceMap().put(rss.getUrl(), rss);
-		return aerospikeDataService.saveRssConfig(rss);
+	@RequestMapping(value="/rss", method={RequestMethod.POST})
+	public CLRssSource saveRssConfig(@RequestBody  CLRssSource rss) throws MalformedURLException {
+		return aerospikeDataService.addRssSource(rss);
+	}
+	
+	@RequestMapping(value="/rss", method={RequestMethod.PUT})
+	public CLRssSource updateRssConfig(@RequestBody  CLRssSource rss) throws MalformedURLException {
+		return aerospikeDataService.updateRssSource(rss);
 	}
 	
 	@RequestMapping(value="/rss/{url}", method={RequestMethod.DELETE})
 	public void removeRssConfig(@PathVariable (value="url") String rssUrl) {
-		System.out.println("removed rss: " + aerospikeDataService.getRssSourceMap().remove(rssUrl).getUrl());
-		aerospikeDataService.remove(rssUrl);
+		aerospikeDataService.removeRss(rssUrl);
 	}
 	
 	@RequestMapping("/rssList")
@@ -52,15 +56,16 @@ public class CLRssController {
 		return aerospikeDataService.getRssSourceMap().values();
 	}
 	
-	@RequestMapping(path = "/people", method = RequestMethod.GET)
-	public String getPeople() {
-		return "done";
-	}
-	
 	@RequestMapping("/rental")
 	public List<CLRentPage> rentSearch(@RequestParam double lng, @RequestParam double lat, @RequestParam double radius, @RequestParam int hoursAgo){
 		hoursAgo = hoursAgo > MAX_HOUR ? MAX_HOUR : hoursAgo;
-		
 		return aerospikeDataService.fetchPage(lng, lat, radius, new Date().getTime() - hoursAgo * 3600 * 1000);
 	}
+	
+	@RequestMapping("/rssListArea")
+	public Collection<CLRentPage> listRssSourceAreaGT(@RequestParam int a) {
+		return aerospikeDataService.getRssSourceAreaGT(a);
+	}
+	
+	
 }

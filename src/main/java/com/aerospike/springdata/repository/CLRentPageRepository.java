@@ -30,7 +30,7 @@ public interface CLRentPageRepository extends AerospikeRepository<CLRentPage, St
 
 	public List<CLRentPage> findAll();
 	
-	public List<CLRentPage> findByArea(int area);
+	public List<CLRentPage> findByAreaGreaterThan(int area);
 
 	public List<CLRentPage> findByAreaBetween(int min, int max);
 

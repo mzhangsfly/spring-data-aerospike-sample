@@ -68,7 +68,6 @@ public class CLRentPageParser implements Callable<CLRentPage>{
             Matcher m = p.matcher(script.html()); // you have to use html here and NOT text! Text will drop the 'key' part
             while( m.find()){
             	rentPage = new CLRentPage(m.group(1)); // value only
-            	rentPage.setUrl(this.url.toString());
             }
 		}
 		
@@ -84,7 +83,6 @@ public class CLRentPageParser implements Callable<CLRentPage>{
 		try {
 			rentPage.setPrice(format.parse(doc.select("span.price").first().ownText().replaceAll("[^\\d.]+", "")).floatValue());
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -134,5 +132,4 @@ public class CLRentPageParser implements Callable<CLRentPage>{
 		e = e.select("div.print-qrcode").first();
 		return e.attr("data-location");
 	}
-	
 }

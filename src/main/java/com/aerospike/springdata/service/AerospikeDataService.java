@@ -17,6 +17,8 @@
 
 package com.aerospike.springdata.service;
 
+import java.net.MalformedURLException;
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -73,7 +75,28 @@ public class AerospikeDataService {
 		
 		syncRssSource();
 		rssSourceMap.put(CLRssData.CLSF_RENT_RSS_URL, new CLRssSource(CLRssData.CLSF_RENT_RSS_URL));
-		new Thread(clRssTask).start();
+	}
+
+	/**
+	 * @return the rssSourceMap
+	 * @throws MalformedURLException 
+	 */
+	public CLRssSource addRssSource(CLRssSource rss) throws MalformedURLException {
+		rssSourceMap.put(rss.getUrl(), rss);
+		clRssTask.addRssSourceTask(rss);
+		return saveRssConfig(rss);
+	}
+
+	/**
+	 * @return the rssSourceMap
+	 * @throws MalformedURLException 
+	 */
+	public CLRssSource updateRssSource(CLRssSource rss) throws MalformedURLException {
+		rssSourceMap.put(rss.getUrl(), rss);
+		if(rss.getEnabled())
+			clRssTask.addRssSourceTask(rss);
+		else clRssTask.removeRssSourceTask(rss);
+		return saveRssConfig(rss);
 	}
 
 	/**
@@ -105,8 +128,9 @@ public class AerospikeDataService {
 		}
 	}
 	
-	public void remove(String rssUrl){
+	public void removeRss(String rssUrl){
 		rssRepository.delete(rssUrl);
+		clRssTask.removeRssSourceTask(rssSourceMap.remove(rssUrl));
 	}
 	
 	public void save(List<CLRentPage> pages){
@@ -115,5 +139,13 @@ public class AerospikeDataService {
 	
 	public CLRssSource saveRssConfig(CLRssSource rss){
 		return rssRepository.save(rss);
+	}
+
+	/**
+	 * @param a
+	 * @return
+	 */
+	public List<CLRentPage> getRssSourceAreaGT(int a) {
+		return pageRepository.findByAreaGreaterThan(a);
 	}
 }

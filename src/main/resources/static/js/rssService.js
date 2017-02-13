@@ -6,7 +6,6 @@ rssService.factory('RssDataOp', function ($http, $q, $mdDialog) {
 	var rss = '/rss';
 	
 	var rssListData;
-	console.log('I am BigService1');
 		
 	service.loadRssList = function(){
 		$http.get(rssList)

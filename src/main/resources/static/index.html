@@ -13,51 +13,60 @@
 <script src="js/mapController.js"></script>
 <link rel="stylesheet" type="text/css" href="css/map.css">
 <link rel="stylesheet" type="text/css" href="webjars/bootstrap/css/bootstrap.css">
+<link href="https://cdn.jotfor.ms/static/formCss.css?3.3.17086" rel="stylesheet" type="text/css" />
+<link type="text/css" rel="stylesheet" href="https://cdn.jotfor.ms/css/styles/nova.css?3.3.17086" />
+<link type="text/css" media="print" rel="stylesheet" href="https://cdn.jotfor.ms/css/printForm.css?3.3.17086" />
+<link type="text/css" rel="stylesheet" href="https://cdn.jotfor.ms/themes/CSS/566a91c2977cdfcd478b4567.css?"/>
 </head>
 
 <body ng-controller="mapController">
-<div class="container">
-	<h1>For Rent Property Search </h1>
-		<div>
-			<form class="form-inline" ng-submit="submit()">
-				<div class="container">
-					<div class="row">
-						 <div class="form-group">
-						    <label for="address">Enter Center Address: </label>
-							<input class="form-control" type="text" id="address" ng-model="searchParam.address" size="64"/><br/>
+	<div class="container">
+		<div class="form-header-group ">
+			<h2 id="header_1" class="form-header" data-component="header">
+				Rental Search</h2>
+			<div>
+				<form class="form-inline" ng-submit="submit()">
+					<div class="container">
+						<div class="row">
+							<div class="form-group">
+								<label for="address">Enter Center Address: </label> <input
+									class="form-control" type="text" id="address"
+									ng-model="searchParam.address" size="64" /><br />
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group">
+								<label for="number">Distance from Center: </label> <input
+									class="form-control" type="number" id="number"
+									ng-model="searchParam.distance" /><br />
+							</div>
+							<div class="form-group">
+								<label for="hours">Recent Post Within:</label> <input
+									class="form-control" type="number" id="hours"
+									ng-model="searchParam.hours" /><br />
+							</div>
+						</div>
+						<div class="row">
+							<input class="btn btn-default" type="submit" id="submit"
+								value="Submit" />
 						</div>
 					</div>
-					<div class="row">
-						 <div class="form-group">
-						    <label for="number">Distance from Center: </label>
-							<input class="form-control" type="number" id="number" ng-model="searchParam.distance"  /><br/>
-						</div>
-						<div class="form-group">
-						    <label for="hours">Recent Post Within:</label>
-							<input class="form-control" type="number" id="hours" ng-model="searchParam.hours" /><br/>
-						</div>
-					</div>
-					<div class="row">
-						<input class="btn btn-default" type="submit" id="submit" value="Submit" />
-					</div>
-				</div>
-			</form>
+				</form>
+			</div>
 		</div>
-  	<hr />
-  
-   <div class="container">
-		<ng-map default-style="false" zoom="3" center="{{map.ucenter.lat}}, {{map.ucenter.lng}}">
-			<info-window id="myInfoWindow">
-			    <div ng-non-bindable> 
-				    <div id="siteNotice"></div>
-	    			<h1 id="firstHeading" class="firstHeading">{{selectedProperty.name}}</h1>
-	          		<div id="bodyContent">
-	           		    <br/>
-						<a target="_blank" href="{{selectedProperty.url}}"><img src="{{selectedProperty.image}}"/></a>		    
-				    </div>
-			</info-window>
-		</ng-map>
+		<div class="container">
+			<ng-map default-style="false" zoom="3"
+				center="{{map.ucenter.lat}}, {{map.ucenter.lng}}"> <info-window
+				id="myInfoWindow">
+			<div ng-non-bindable>
+				<div id="siteNotice"></div>
+				<h1 id="firstHeading" class="firstHeading">{{selectedProperty.name}}</h1>
+				<div id="bodyContent">
+					<br /> <a target="_blank" href="{{selectedProperty.url}}"><img
+						src="{{selectedProperty.image}}" /></a>
+				</div>
+			</info-window> </ng-map>
+		</div>
 	</div>
-</div>
 </body>
 </html>
